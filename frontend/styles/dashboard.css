@@ -1,0 +1,215 @@
+/* ===== DASHBOARD LAYOUT (dashboard.css) ===== */
+
+/* 1. Body Override */
+/* We need to override the 'display: flex' from style.css */
+.dashboard-body {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--light-gray);
+}
+
+/* 2. Top Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 1rem 2rem;
+  height: 70px; /* Fixed height for navbar */
+}
+
+.navbar .logo h2 {
+  color: var(--white);
+  margin: 0;
+}
+
+.navbar .user-info {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .user-info span {
+  margin-right: 1.5rem;
+}
+
+.navbar .logout-btn {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  background: var(--accent-color);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s ease;
+}
+
+.navbar .logout-btn:hover {
+  background-color: #005691; /* Darker accent */
+}
+
+/* 3. Main Dashboard Container */
+.dashboard-container {
+  display: flex;
+}
+
+/* 4. Sidebar */
+.sidebar {
+  width: 250px;
+  background: var(--white);
+  /* Full height minus the navbar */
+  min-height: calc(100vh - 70px);
+  padding: 1.5rem;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar h3 {
+  color: var(--primary-color);
+  font-weight: 700;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.sidebar ul {
+  list-style: none;
+  margin-top: 1.5rem;
+}
+
+.sidebar ul li a {
+  display: block;
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 0.85rem 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+  background-color: var(--light-gray);
+  color: var(--accent-color);
+}
+
+.sidebar ul li a.active {
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* 5. Main Content Area */
+.main-content {
+  flex: 1; /* Takes up all remaining space */
+  padding: 2rem;
+  /* Allows content to scroll if it's too long */
+  overflow-y: auto;
+  height: calc(100vh - 70px);
+}
+
+.main-content h1 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+/* 6. Stats Cards Grid */
+.stats-grid {
+  display: grid;
+  /* Creates 4 responsive columns */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border-bottom: 4px solid var(--accent-color);
+}
+
+.stat-card h4 {
+  font-size: 0.9rem;
+  color: #777;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Special color for the reimbursement card */
+.stat-card.reimburse {
+  border-bottom-color: #d9534f; /* Red */
+}
+.stat-card.reimburse .amount {
+  color: #d9534f; /* Red */
+}
+
+/* 7. Content Grid (Actions & Table) */
+.content-grid {
+  display: grid;
+  /* 1 part for actions, 2 parts for table */
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Generic card for holding content */
+.card {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.card h2 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+/* 8. Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Clean lines */
+}
+
+th, td {
+  padding: 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+th {
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+td {
+  font-size: 0.95rem;
+}
+
+/* Status Badges */
+.status {
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status.pending {
+  background: #fcf8e3; /* Yellowish */
+  color: #8a6d3b;
+}
+
+.status.reimburse {
+  background: #f2dede; /* Reddish */
+  color: #a94442;
+}

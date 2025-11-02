@@ -1,0 +1,113 @@
+/* ===== VJTI THEME (style.css) ===== */
+
+/* 1. FONT IMPORT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* 2. CSS VARIABLES (Our VJTI Color Palette) */
+:root {
+  --primary-color: #0a1f49; /* VJTI Dark Blue */
+  --accent-color: #016fbe;  /* VJTI Bright Blue */
+  --text-color: #444444;    /* Dark Gray for text */
+  --light-gray: #f7f7f7;   /* Light background color */
+  --white: #ffffff;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 3. GLOBAL RESET & BODY STYLING */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--light-gray);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* 4. LOGIN PAGE STYLING */
+.login-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 2.5rem;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border-top: 5px solid var(--primary-color);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-header img {
+  width: 80px; /* You will add a VJTI logo here */
+  margin-bottom: 1rem;
+}
+
+.login-header h1 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.login-header p {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* 5. FORM STYLING */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(1, 111, 190, 0.2);
+}
+
+/* 6. BUTTON STYLING (VJTI Style) */
+.btn {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+}
