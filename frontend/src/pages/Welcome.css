@@ -1,0 +1,124 @@
+/* --- Styles for Welcome.jsx --- */
+
+.welcome-container {
+  width: 100%;
+}
+
+/* 1. HERO SECTION */
+.welcome-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+  background-image: linear-gradient(145deg, var(--primary-color), var(--accent-color));
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.welcome-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://placehold.co/1920x1080/000000/0a1f49?text=VJTI+Campus+Image');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+  z-index: -2;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.hero-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* 2. COMMITTEE GRID */
+.committee-grid {
+  max-width: 1200px;
+  margin: -4rem auto 4rem auto; /* Pulls grid up over the hero */
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  position: relative; /* To sit on top of the hero */
+  z-index: 2;
+}
+
+.committee-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  color: var(--text-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border-bottom: 4px solid transparent;
+}
+
+.committee-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  border-bottom-color: var(--accent-color);
+}
+
+.card-logo {
+  width: 100%;
+  padding-top: 100%; /* Creates a perfect square */
+  position: relative;
+  background-color: var(--light-gray);
+}
+
+.card-logo img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Use contain to see the whole logo */
+  padding: 1.5rem; /* Give the logo some space */
+}
+
+.card-name {
+  padding: 1rem;
+  text-align: center;
+  background: #fcfcfc;
+}
+
+.card-name h3 {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
