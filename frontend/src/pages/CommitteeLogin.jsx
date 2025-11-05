@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { committees } from '../committees';
 import './CommitteeLogin.css';
+import axios from 'axios';
 
 function CommitteeLogin() {
   const [role, setRole] = useState('student');
-  const [email, setEmail] = useState('');
+  // --- We now use 'username' state instead of 'email' ---
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [currentCommittee, setCurrentCommittee] = useState(null);
   
-  // Parallax State
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   
   const { committeeId } = useParams();
   const navigate = useNavigate();
@@ -23,22 +25,42 @@ function CommitteeLogin() {
       navigate('/');
     }
   }, [committeeId, navigate]);
-  
-  // Parallax Effect
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []); 
 
-  const handleLogin = (e) => {
+  
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Logging in to:', committeeId);
-    console.log('Credentials:', { role, email, password });
+    setLoading(true);
+    setError('');
+
+    try {
+      // --- We now send 'username' in the API call ---
+      const loginData = {
+        username,
+        password,
+        role,
+      };
+      
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/login', 
+        loginData
+      );
+
+      // --- LOGIN SUCCESS (No change here) ---
+      setLoading(false);
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      
+      if (user.role === 'student') {
+        navigate('/student-dashboard');
+      } else if (user.role === 'teacher') {
+        navigate('/teacher-dashboard');
+      }
+
+    } catch (err) {
+      setLoading(false);
+      const message = err.response?.data?.message || 'Login failed. Please try again.';
+      setError(message);
+    }
   };
 
   if (!currentCommittee) {
@@ -46,21 +68,9 @@ function CommitteeLogin() {
   }
 
   return (
-    // --- THIS IS THE ONLY LINE WE'RE CHANGING ---
-    // We're replacing "page-container login-page-container"
-    // with our new full-screen class.
     <div className="login-page-fullscreen-wrapper">
-      
-      {/* --- Parallax Background --- */}
-      <div 
-        className="parallax-grid-bg"
-        style={{
-          transform: `translate(${mousePos.x / -50}px, ${mousePos.y / -50}px)`
-        }}
-      ></div>
-      {/* ------------------------------- */}
+      <div className="parallax-grid-bg" />
 
-      {/* The card will be centered by the new wrapper */}
       <div className="card login-card-layout">
         
         <div className="login-identity-panel">
@@ -93,24 +103,38 @@ function CommitteeLogin() {
                 <span>Faculty Advisor</span>
               </label>
             </div>
+
+            {/* --- THIS FORM GROUP IS NOW FOR 'username' --- */}
             <div className="form-group">
-              <label htmlFor="email">VJTI Email</label>
+              <label htmlFor="username">Username</label>
               <input
-                type="email" id="email" value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
+
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
-                type="password" id="password" value={password}
+                type="password"
+                id="password"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-              Login
+            
+            {error && (
+              <div className="login-error-message">
+                {error}
+              </div>
+            )}
+            
+            <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
           <p className="login-footer">

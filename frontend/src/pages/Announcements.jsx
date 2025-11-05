@@ -1,22 +1,29 @@
 import React from 'react';
-import { mockAnnouncements } from '../mockData'; // Get ALL announcements
-import './Announcements.css'; // New CSS file
+import { mockAnnouncements } from '../mockData'; 
+import './Announcements.css'; 
 
 function Announcements() {
   return (
     <div className="page-container">
-      <div className="page-header">
+      <div className="page-header" data-aos="fade-down">
         <h1>All Announcements</h1>
         <p>A complete archive of all official communication.</p>
       </div>
 
       <div className="full-announcements-list">
-        {/* We map the full list, not just the preview */}
-        {mockAnnouncements.map((announcement) => (
-          <div className="announcement-card" key={announcement.id}>
-            <h3>{announcement.title}</h3>
-            <span className="announcement-date">{announcement.date}</span>
-            <p>{announcement.snippet}</p>
+        {mockAnnouncements.map((announcement, index) => (
+          // We use the global .card and add animations
+          <div 
+            className="card announcement-list-card" 
+            key={announcement.id}
+            data-aos="fade-up"
+            data-aos-delay={index * 50}
+          >
+            <div className="announcement-content">
+              <h3>{announcement.title}</h3>
+              <span className="announcement-date">{announcement.date}</span>
+              <p>{announcement.snippet}</p>
+            </div>
           </div>
         ))}
       </div>
