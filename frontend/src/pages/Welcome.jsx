@@ -1,152 +1,102 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { committees } from '../committees';
 import { mockAnnouncements } from '../mockData';
-import './Welcome.css'; // We will completely replace this file
+import './Welcome.css'; // We'll keep this file, but *only* for the hero
 
-// --- Settings (Same) ---
-const ITEMS_TO_SHOW = 4;
-const AUTO_PLAY_DELAY = 5000;
-const TRANSITION_DURATION = 500;
-const headlineCommittes = ['Technovanza', 'SRA', 'Pratibimb', 'Enthusia', 'Rangawardhan', 'VJTI Racing', 'E-Cell'];
+// Get just the top 3 announcements
 const announcementsPreview = mockAnnouncements.slice(0, 3);
 
+// --- A "Bullhorn" SVG Icon (Same as before) ---
+const BullhornIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+    <path d="M21.75 12a.75.75 0 0 1-.75.75H13.81l1.72 1.72a.75.75 0 1 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 1.06l-1.72 1.72h7.19a.75.75 0 0 1 .75.75Z" />
+    <path fillRule="evenodd" d="M11.03 2.522a.75.75 0 0 1 .622.868l-1.04 4.162a.75.75 0 0 1-.622.868H9.36l1.72 1.72a.75.75 0 1 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 1.06l-1.72 1.72h.63l1.04-4.162a.75.75 0 0 1 .868-.622Z" clipRule="evenodd" />
+    <path fillRule="evenodd" d="M10.125 15.75a.75.75 0 0 1 .75.75v5.04l1.72-1.72a.75.75 0 1 1 1.06 1.06l-3 3a.75.75 0 0 1-1.06 0l-3-3a.75.75 0 1 1 1.06-1.06l1.72 1.72v-5.04a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
+    <path fillRule="evenodd" d="M15.47 11.03a.75.75 0 0 1 1.06-1.06l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H15a.75.75 0 0 1 0-1.5h2.19l-1.72-1.72a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+  </svg>
+);
+
 function Welcome() {
-  // --- All State and Logic (This is all unchanged) ---
-  const [headlineIndex, setHeadlineIndex] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [displayIndex, setDisplayIndex] = useState(committees.length);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
-  const sliderRef = useRef(null);
-  const autoPlayTimer = useRef(null);
-
-  useEffect(() => {
-    const headlineInterval = setInterval(() => {
-      setHeadlineIndex((prevIndex) => (prevIndex + 1) % headlineCommittes.length);
-    }, 3000);
-    return () => clearInterval(headlineInterval);
-  }, []);
-
-  const goToNext = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setDisplayIndex((prev) => prev + 1);
-    setCurrentIndex((prev) => (prev + 1) % committees.length);
-  };
-
-  const goToPrevious = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setDisplayIndex((prev) => prev - 1);
-    setCurrentIndex((prev) => (prev - 1 + committees.length) % committees.length);
-  };
-
-  useEffect(() => {
-    startAutoPlay();
-    return () => stopAutoPlay();
-  }, [isHovering]);
-
-  const startAutoPlay = () => { if (isHovering) return; stopAutoPlay(); autoPlayTimer.current = setInterval(goToNext, AUTO_PLAY_DELAY); };
-  const stopAutoPlay = () => { if (autoPlayTimer.current) clearInterval(autoPlayTimer.current); };
-
-  const handleTransitionEnd = () => {
-    setIsTransitioning(false);
-    if (displayIndex === committees.length * 2) {
-      sliderRef.current.style.transition = 'none'; setDisplayIndex(committees.length); void sliderRef.current.offsetWidth;
-      sliderRef.current.style.transition = `transform ${TRANSITION_DURATION}ms ease-in-out`;
-    }
-    if (displayIndex === committees.length - 1) {
-      sliderRef.current.style.transition = 'none'; setDisplayIndex(committees.length * 2 - 1); void sliderRef.current.offsetWidth;
-      sliderRef.current.style.transition = `transform ${TRANSITION_DURATION}ms ease-in-out`;
-    }
-  };
-  const sliderItems = [...committees, ...committees, ...committees];
-  // --- End of Unchanged Logic ---
-
   return (
-    // We add a new class "aesthetic-welcome" to the root
-    <div className="welcome-container aesthetic-welcome">
+    <div className="welcome-page">
       
-      {/* --- 1. HERO (Redesigned) --- */}
-      <header className="aesthetic-hero">
-        {/* The hero content is now in a container */}
-        <div className="hero-content-container">
-          <h1>
-            Welcome to the home of
-            <span className="dynamic-headline" key={headlineIndex}>
-              {headlineCommittes[headlineIndex]}
-            </span>
-          </h1>
-          <p>A unified portal for managing committee finances, expenses, and reimbursements with full transparency.</p>
+      {/* --- 1. THE "PERFECTED" HERO --- */}
+      <header className="hero-container">
+        {/* This is a real, high-quality image of VJTI */}
+        <img 
+          src="https://vjti.ac.in/wp-content/uploads/2024/06/VJTI-Quad-1-scaled.jpg" 
+          alt="VJTI Campus" 
+          className="hero-image"
+          onError={(e) => e.target.src = 'https://placehold.co/1920x600/0a1f49/444444?text=VJTI+Campus'}
+        />
+        <div className="hero-overlay"></div>
+        
+        {/* The Glass Panel (Now correctly styled) */}
+        <div className="hero-panel">
+          <h1>Committee Coordinator</h1>
+          <p>
+            A VJTI portal for financial transparency, expense tracking, 
+            and unified committee management.
+          </p>
+          <a href="#committee-grid" className="btn btn-primary">
+            Select Your Committee
+          </a>
         </div>
       </header>
 
-      {/* --- 2. ANNOUNCEMENTS (Moved Up) --- */}
-      <section className="announcements-container">
-        <div className="announcements-header">
-          <h2>Live Announcements</h2>
+      {/* --- 2. ANNOUNCEMENTS SECTION --- */}
+      {/* We use the global .page-container class from App.css */}
+      <section className="page-container">
+        <div className="page-header">
+          <h1>Live Announcements</h1>
           <p>General updates from the college administration</p>
         </div>
-        <div className="announcements-list">
+        
+        {/* We use a specific layout for announcements */}
+        <div className="announcement-list-layout">
           {announcementsPreview.map((announcement) => (
-            <div className="announcement-card" key={announcement.id}>
-              <h3>{announcement.title}</h3>
-              <span className="announcement-date">{announcement.date}</span>
-              <p>{announcement.snippet}</p>
+            // We use the global .card class from App.css
+            <div className="card announcement-card-layout" key={announcement.id}>
+              <div className="announcement-icon">
+                <BullhornIcon />
+              </div>
+              <div className="announcement-content">
+                <h3>{announcement.title}</h3>
+                <span className="announcement-date">{announcement.date}</span>
+                <p>{announcement.snippet}</p>
+              </div>
             </div>
           ))}
         </div>
-        <div className="view-all-container">
-          <Link to="/announcements" className="btn-view-all">
+        <div className="view-all-link">
+          <Link to="/announcements">
             View All Announcements &rarr;
           </Link>
         </div>
       </section>
 
-      {/* --- 3. COMMITTEE CAROUSEL (Moved Down, Redesigned) --- */}
-      <section className="carousel-section">
-        <div className="carousel-header">
-          <h2>Select Your Committee</h2>
+      {/* --- 3. COMMITTEE GRID SECTION --- */}
+      {/* We use the global .page-container class again */}
+      <section className="page-container" id="committee-grid">
+        <div className="page-header">
+          <h1>Select Your Committee</h1>
+          <p>Choose your committee to log in and access your dashboard.</p>
         </div>
-        <div 
-          className="carousel-container"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
-          <button className="carousel-arrow left" onClick={goToPrevious} aria-label="Previous">&lt;</button>
-          
-          <div className="carousel-ghost-wrapper">
-            <div className="carousel-window">
-              <div
-                className="carousel-slider"
-                ref={sliderRef}
-                style={{
-                  transform: `translateX(-${displayIndex * (100 / ITEMS_TO_SHOW)}%)`,
-                  transition: isTransitioning ? `transform ${TRANSITION_DURATION}ms ease-in-out` : 'none',
-                }}
-                onTransitionEnd={handleTransitionEnd}
-              >
-                {sliderItems.map((committee, index) => (
-                  <Link
-                    to={`/login/${committee.id}`}
-                    // We use the NEW card style
-                    className="committee-card-portrait"
-                    key={`${committee.id}-${index}`}
-                  >
-                    <div className="card-portrait-logo">
-                      <img src={committee.logo} alt={committee.name} />
-                    </div>
-                    <div className="card-portrait-name">
-                      <h3>{committee.name}</h3>
-                    </div>
-                  </Link>
-                ))}
+        
+        {/* We use the global .committee-grid-layout class from App.css */}
+        <div className="committee-grid-layout">
+          {committees.map((committee) => (
+            // We use the global .card class from App.css
+            <Link to={`/login/${committee.id}`} className="card committee-card" key={committee.id}>
+              <div className="committee-card-logo">
+                <img src={committee.logo} alt={committee.name} />
               </div>
-            </div>
-          </div>
-          
-          <button className="carousel-arrow right" onClick={goToNext} aria-label="Next">&gt;</button>
+              <div className="committee-card-name">
+                <h3>{committee.name}</h3>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     </div>

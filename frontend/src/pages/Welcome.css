@@ -1,230 +1,168 @@
-/* --- NEW AESTHETIC STYLES for Welcome.jsx --- */
+/* --- STYLES FOR WELCOME PAGE (Welcome.css) --- */
+/* This file is now small! It only handles layout. */
 
-/* 1. NEW PAGE-LEVEL STYLING */
-.aesthetic-welcome {
-  width: 100%;
-  /* Use a warmer, more premium background */
-  background-color: #f9f9f9;
-}
-
-/* 2. AESTHETIC HERO */
-.aesthetic-hero {
+/* 1. "PERFECTED" HERO */
+.hero-container {
   position: relative;
+  height: 500px;
   display: flex;
-  align-items: center; /* Vertically center content */
-  text-align: left; /* Left-align for a cleaner look */
-  padding: 6rem 4rem;
-  color: var(--white);
-  min-height: 400px;
-  background-color: var(--primary-color); /* Fallback */
-
-  /* The new hero image */
-  background-image: url('https://placehold.co/1920x800/222222/444444?text=VJTI+Campus+(Placeholder)');
-  background-size: cover;
-  background-position: center;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem 4rem;
+  overflow: hidden;
 }
 
-/* Dark overlay for readability */
-.aesthetic-hero::before {
-  content: '';
+.hero-image {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(10, 31, 73, 0.7); /* VJTI Blue overlay */
+  object-fit: cover;
   z-index: 1;
 }
 
-.hero-content-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Simple dark overlay */
   z-index: 2;
 }
 
-.aesthetic-hero h1 {
-  font-size: 2.8rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  min-height: 100px;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.aesthetic-hero p {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.8);
-  max-width: 600px;
-}
-
-.dynamic-headline {
-  display: block;
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: #fff;
-  margin-top: 0.5rem;
-  animation: fadeIn 0.8s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 3. ANNOUNCEMENTS SECTION (Moved Up) */
-.announcements-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-  /* Add a border to separate from the carousel */
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.announcements-header {
-  text-align: left; /* More professional than center */
-  margin-bottom: 2.5rem;
-}
-.announcements-header h2 {
-  font-size: 2.5rem;
-  color: var(--primary-color);
-}
-.announcements-header p {
-  font-size: 1.1rem;
-  color: var(--text-light);
-}
-
-.announcements-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-/* Re-styled Announcement Card */
-.announcement-card {
-  background: var(--white);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
-  /* Use a softer shadow */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s ease;
-  border-left: 4px solid var(--border-color); /* Add a side-bar */
-}
-.announcement-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-left-color: var(--accent-color);
-}
-.announcement-card h3 { color: var(--primary-color); font-size: 1.2rem; }
-.announcement-card .announcement-date {
-  display: block; font-size: 0.85rem; color: var(--text-light);
-  margin: 0.25rem 0 0.75rem 0;
-}
-.announcement-card p { font-size: 0.95rem; line-height: 1.6; }
-
-.view-all-container {
-  text-align: left; /* Match the header */
-  margin-top: 2rem;
-}
-.btn-view-all {
-  display: inline-block; text-decoration: none; font-weight: 600;
-  color: var(--accent-color); font-size: 1.1rem; padding: 0.5rem 0;
-  border-radius: var(--border-radius); transition: all 0.3s ease;
-}
-.btn-view-all:hover { color: var(--primary-color); }
-
-/* 4. CAROUSEL SECTION (Moved Down) */
-.carousel-section {
-  width: 100%;
-  padding: 4rem 0; /* Full-width background */
-  background-color: #fff; /* White background to pop */
-  overflow: hidden; /* Hide horizontal overflow */
-}
-
-.carousel-header {
-  max-width: 1100px;
-  margin: 0 auto 2rem auto;
-  padding: 0 2rem;
-  text-align: left;
-}
-.carousel-header h2 {
-  font-size: 2.5rem;
-  color: var(--primary-color);
-}
-
-.carousel-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 4rem; /* Space for arrows */
+/* The Glass Panel */
+.hero-panel {
   position: relative;
+  z-index: 3;
+  flex-basis: 500px;
+  padding: 2.5rem;
+  color: var(--white);
+  
+  /* --- The Glass Effect --- */
+  background: rgba(10, 31, 73, 0.5); /* VJTI Blue, 50% opaque */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* --- End Glass Effect --- */
+  
+  border-radius: var(--border-radius);
+}
+
+.hero-panel h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-panel p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 1.5rem 0 2rem 0;
+  line-height: 1.7;
+}
+
+.hero-panel .btn {
+  background-color: var(--white);
+  color: var(--primary-color);
+  font-weight: 700;
+}
+.hero-panel .btn:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* 2. ANNOUNCEMENT CARD LAYOUT */
+.announcement-list-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.announcement-card-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border: none; /* Override default border */
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  box-shadow: none; /* No shadow for a list */
+}
+.announcement-card-layout:last-child {
+  border-bottom: none;
+}
+.announcement-card-layout:hover {
+  transform: none; /* No hover effect */
+  background-color: #fdfdfd;
+}
+
+.announcement-icon {
+  flex-shrink: 0;
+  padding: 0.75rem;
+  border-radius: 50%;
+  background-color: var(--bg-light);
+  color: var(--accent-color);
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+.announcement-content h3 { 
+  color: var(--primary-color); 
+  font-size: 1.2rem; 
+  margin-bottom: 0.25rem;
+}
+.announcement-content .announcement-date {
+  display: block; font-size: 0.85rem; color: var(--text-light);
+  margin-bottom: 0.75rem;
 }
 
-/* 5. ARROW STYLES (Unchanged) */
-.carousel-arrow {
-  background: var(--white); border: 1px solid #e0e0e0;
-  border-radius: 50%; width: 50px; height: 50px;
-  font-size: 1.5rem; font-weight: bold; color: var(--primary-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); cursor: pointer;
-  position: absolute; z-index: 3; transition: all 0.3s ease;
+.view-all-link {
+  text-align: left;
+  margin-top: 2rem;
 }
-.carousel-arrow:hover { background: var(--primary-color); color: var(--white); transform: scale(1.1); }
-.carousel-arrow.left { left: 0; }
-.carousel-arrow.right { right: 0; }
-
-/* 6. GHOST FADE WRAPPER (Unchanged) */
-.carousel-ghost-wrapper {
-  width: 100%; overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-}
-.carousel-window { width: 100%; overflow: visible; }
-.carousel-slider { display: flex; }
-
-/* 7. --- NEW PORTRAIT CARD STYLES --- */
-.committee-card-portrait {
-  width: calc(100% / 4); /* 4 items */
-  flex-shrink: 0;
-  padding: 0 0.75rem;
+.view-all-link a {
   text-decoration: none;
-  color: var(--text-color);
-  transition: all 0.3s ease;
+  font-weight: 600;
+  color: var(--accent-color);
+  font-size: 1.1rem;
+}
+.view-all-link a:hover {
+  color: var(--primary-color);
 }
 
-/* The card itself */
-.committee-card-portrait .card-portrait-logo {
-  background: var(--white);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  transition: all 0.3s ease;
-  padding-top: 100%; /* Square aspect ratio for the logo part */
-  position: relative;
-  overflow: hidden;
-}
 
-.committee-card-portrait .card-portrait-logo img {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  object-fit: contain; padding: 1.5rem;
+/* 3. COMMITTEE CARD LAYOUT */
+.committee-card {
+  text-decoration: none;
+  /* We use the .card style from App.css */
 }
-
-/* The text below the card */
-.committee-card-portrait .card-portrait-name {
-  padding: 1rem 0.5rem;
+.committee-card-logo {
+  height: 200px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fdfdfd;
+}
+.committee-card-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.committee-card-name {
+  padding: 1.25rem;
   text-align: center;
+  border-top: 1px solid var(--border-color);
 }
-.committee-card-portrait .card-portrait-name h3 {
+.committee-card-name h3 {
   color: var(--primary-color);
   font-size: 1.1rem;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-/* Hover effect */
-.committee-card-portrait:hover .card-portrait-logo {
-  transform: translateY(-5px);
-  border-color: var(--accent-color);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-.committee-card-portrait:hover .card-portrait-name h3 {
+.committee-card:hover .committee-card-name h3 {
   color: var(--accent-color);
 }

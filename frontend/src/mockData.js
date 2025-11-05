@@ -38,9 +38,9 @@ export const mockAnnouncements = [
 export const mockFaculty = [
   {
     id: 1,
-    name: 'Prof. S. R. Joshi',
+    name: 'Prof. S.S rechula',
     department: 'Computer Engineering',
-    committees: ['Technovanza', 'COC (Community of Coders)'],
+    committees: ['Digital'],
     photo: 'https://placehold.co/200x200/0a1f49/white?text=SRJ'
   },
   {
@@ -75,7 +75,8 @@ export const mockFaculty = [
     id: 6,
     name: 'Prof. M. K. Rao',
     department: 'Administration',
-    committees: ['Alumni Association', 'Vishwa VJTI'],
+    committees: ['Alumni Association'],
     photo: 'https://placehold.co/200x200/016fbe/white?text=MKR'
   },
+ 
 ];
