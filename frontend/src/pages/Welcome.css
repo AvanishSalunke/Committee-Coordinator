@@ -1,124 +1,230 @@
-/* --- Styles for Welcome.jsx --- */
+/* --- NEW AESTHETIC STYLES for Welcome.jsx --- */
 
-.welcome-container {
+/* 1. NEW PAGE-LEVEL STYLING */
+.aesthetic-welcome {
   width: 100%;
+  /* Use a warmer, more premium background */
+  background-color: #f9f9f9;
 }
 
-/* 1. HERO SECTION */
-.welcome-hero {
+/* 2. AESTHETIC HERO */
+.aesthetic-hero {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 6rem 2rem;
+  align-items: center; /* Vertically center content */
+  text-align: left; /* Left-align for a cleaner look */
+  padding: 6rem 4rem;
   color: var(--white);
-  overflow: hidden;
+  min-height: 400px;
+  background-color: var(--primary-color); /* Fallback */
+
+  /* The new hero image */
+  background-image: url('https://placehold.co/1920x800/222222/444444?text=VJTI+Campus+(Placeholder)');
+  background-size: cover;
+  background-position: center;
 }
 
-.hero-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--primary-color);
-  background-image: linear-gradient(145deg, var(--primary-color), var(--accent-color));
-  opacity: 0.8;
-  z-index: -1;
-}
-
-.welcome-hero::before {
+/* Dark overlay for readability */
+.aesthetic-hero::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://placehold.co/1920x1080/000000/0a1f49?text=VJTI+Campus+Image');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.1;
-  z-index: -2;
+  background-color: rgba(10, 31, 73, 0.7); /* VJTI Blue overlay */
+  z-index: 1;
 }
 
-.hero-content {
-  max-width: 800px;
-}
-
-.hero-content h1 {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.hero-content p {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  margin-bottom: 2rem;
-}
-
-.hero-content h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-/* 2. COMMITTEE GRID */
-.committee-grid {
-  max-width: 1200px;
-  margin: -4rem auto 4rem auto; /* Pulls grid up over the hero */
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  position: relative; /* To sit on top of the hero */
+.hero-content-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
   z-index: 2;
 }
 
-.committee-card {
+.aesthetic-hero h1 {
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  min-height: 100px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.aesthetic-hero p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+}
+
+.dynamic-headline {
+  display: block;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 0.5rem;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 3. ANNOUNCEMENTS SECTION (Moved Up) */
+.announcements-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  /* Add a border to separate from the carousel */
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.announcements-header {
+  text-align: left; /* More professional than center */
+  margin-bottom: 2.5rem;
+}
+.announcements-header h2 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+}
+.announcements-header p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+}
+
+.announcements-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Re-styled Announcement Card */
+.announcement-card {
   background: var(--white);
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  /* Use a softer shadow */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--border-color); /* Add a side-bar */
+}
+.announcement-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-left-color: var(--accent-color);
+}
+.announcement-card h3 { color: var(--primary-color); font-size: 1.2rem; }
+.announcement-card .announcement-date {
+  display: block; font-size: 0.85rem; color: var(--text-light);
+  margin: 0.25rem 0 0.75rem 0;
+}
+.announcement-card p { font-size: 0.95rem; line-height: 1.6; }
+
+.view-all-container {
+  text-align: left; /* Match the header */
+  margin-top: 2rem;
+}
+.btn-view-all {
+  display: inline-block; text-decoration: none; font-weight: 600;
+  color: var(--accent-color); font-size: 1.1rem; padding: 0.5rem 0;
+  border-radius: var(--border-radius); transition: all 0.3s ease;
+}
+.btn-view-all:hover { color: var(--primary-color); }
+
+/* 4. CAROUSEL SECTION (Moved Down) */
+.carousel-section {
+  width: 100%;
+  padding: 4rem 0; /* Full-width background */
+  background-color: #fff; /* White background to pop */
+  overflow: hidden; /* Hide horizontal overflow */
+}
+
+.carousel-header {
+  max-width: 1100px;
+  margin: 0 auto 2rem auto;
+  padding: 0 2rem;
+  text-align: left;
+}
+.carousel-header h2 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+}
+
+.carousel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 4rem; /* Space for arrows */
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* 5. ARROW STYLES (Unchanged) */
+.carousel-arrow {
+  background: var(--white); border: 1px solid #e0e0e0;
+  border-radius: 50%; width: 50px; height: 50px;
+  font-size: 1.5rem; font-weight: bold; color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); cursor: pointer;
+  position: absolute; z-index: 3; transition: all 0.3s ease;
+}
+.carousel-arrow:hover { background: var(--primary-color); color: var(--white); transform: scale(1.1); }
+.carousel-arrow.left { left: 0; }
+.carousel-arrow.right { right: 0; }
+
+/* 6. GHOST FADE WRAPPER (Unchanged) */
+.carousel-ghost-wrapper {
+  width: 100%; overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+.carousel-window { width: 100%; overflow: visible; }
+.carousel-slider { display: flex; }
+
+/* 7. --- NEW PORTRAIT CARD STYLES --- */
+.committee-card-portrait {
+  width: calc(100% / 4); /* 4 items */
+  flex-shrink: 0;
+  padding: 0 0.75rem;
   text-decoration: none;
   color: var(--text-color);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
   transition: all 0.3s ease;
-  border-bottom: 4px solid transparent;
 }
 
-.committee-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-  border-bottom-color: var(--accent-color);
-}
-
-.card-logo {
-  width: 100%;
-  padding-top: 100%; /* Creates a perfect square */
+/* The card itself */
+.committee-card-portrait .card-portrait-logo {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  padding-top: 100%; /* Square aspect ratio for the logo part */
   position: relative;
-  background-color: var(--light-gray);
+  overflow: hidden;
 }
 
-.card-logo img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* Use contain to see the whole logo */
-  padding: 1.5rem; /* Give the logo some space */
+.committee-card-portrait .card-portrait-logo img {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: contain; padding: 1.5rem;
 }
 
-.card-name {
-  padding: 1rem;
+/* The text below the card */
+.committee-card-portrait .card-portrait-name {
+  padding: 1rem 0.5rem;
   text-align: center;
-  background: #fcfcfc;
 }
-
-.card-name h3 {
+.committee-card-portrait .card-portrait-name h3 {
   color: var(--primary-color);
   font-size: 1.1rem;
   font-weight: 600;
+}
+
+/* Hover effect */
+.committee-card-portrait:hover .card-portrait-logo {
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.committee-card-portrait:hover .card-portrait-name h3 {
+  color: var(--accent-color);
 }

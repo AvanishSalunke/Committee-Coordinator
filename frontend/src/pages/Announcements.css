@@ -1,0 +1,61 @@
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-header {
+  text-align: center;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.page-header h1 {
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-top: 0.5rem;
+}
+
+.full-announcements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* --- Re-using the card style from Welcome.css --- */
+.announcement-card {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+.announcement-card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-5px);
+}
+
+.announcement-card h3 {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+.announcement-card .announcement-date {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin: 0.25rem 0 0.75rem 0;
+}
+
+.announcement-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}

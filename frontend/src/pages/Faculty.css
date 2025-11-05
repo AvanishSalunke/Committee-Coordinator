@@ -1,0 +1,83 @@
+/* Using the same page-container and page-header from Announcements.css */
+/* In a real app, we'd make these global classes */
+.page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-header {
+  text-align: center;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.page-header h1 {
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-top: 0.5rem;
+}
+
+/* --- New Faculty Grid Styles --- */
+.faculty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.faculty-card {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+.faculty-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+}
+
+.faculty-photo img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--light-gray);
+}
+
+.faculty-info h3 {
+  color: var(--primary-color);
+  font-size: 1.3rem;
+}
+
+.faculty-info .faculty-dept {
+  color: var(--text-light);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.faculty-committees strong {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+.faculty-committees ul {
+  list-style: none;
+  margin-top: 0.5rem;
+}
+
+.faculty-committees li {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  line-height: 1.5;
+}

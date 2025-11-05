@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Welcome from './pages/Welcome';
 import CommitteeLogin from './pages/CommitteeLogin';
+import Announcements from './pages/Announcements'; // Import new page
+import Faculty from './pages/Faculty';       // Import new page
 
 function App() {
   return (
@@ -13,12 +15,15 @@ function App() {
           {/* Route 1: The "Welcome" Homepage */}
           <Route path="/" element={<Welcome />} />
           
-          {/* Route 2: The "Login" page for a specific committee */}
-          {/* :committeeId is a dynamic part of the URL */}
+          {/* Route 2: The "Login" page */}
           <Route path="/login/:committeeId" element={<CommitteeLogin />} />
           
-          {/* Later, we will add protected routes for the dashboard */}
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          {/* Route 3: The "All Announcements" page (NEW) */}
+          <Route path="/announcements" element={<Announcements />} />
+          
+          {/* Route 4: The "Faculty Advisors" page (NEW) */}
+          <Route path="/faculty" element={<Faculty />} />
+
         </Routes>
       </main>
     </div>
