@@ -1,51 +1,104 @@
-/* --- Styles for CommitteeLogin.jsx --- */
+/* --- AESTHETIC STYLES WITH FULL-SCREEN PARALLAX (CommitteeLogin.css) --- */
 
-.login-page-container {
+/* 1. NEW FULL-SCREEN WRAPPER */
+.login-page-fullscreen-wrapper {
+  /* This makes it fill the viewport */
+  width: 100vw;
+  height: calc(100vh - 70px); /* Full height MINUS the 70px navbar */
+  
+  /* This centers the login card */
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Aligns to top */
-  padding-top: 5rem; /* Give it space from the navbar */
-  min-height: calc(100vh - 70px); /* 70px is navbar height */
-  background-color: var(--light-gray);
+  align-items: center;
+  
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  
+  /* Make sure it has the right background color */
+  background-color: var(--bg-light); 
 }
 
-.login-box {
+/* 2. "PERFECTED" Parallax Background Grid */
+.parallax-grid-bg {
+  position: absolute;
+  /* Make it oversized so it never shows its edges */
+  top: -50px;
+  left: -50px;
+  width: calc(100% + 100px);
+  height: calc(100% + 100px);
+  
+  /* --- THIS IS THE CHANGE --- */
+  /* We changed var(--border-color) to #bbb (a darker, more visible grey) */
+  background-image: 
+    radial-gradient(#bbb 1px, transparent 1px);
+  /* -------------------------- */
+
+  background-size: 20px 20px;
+  z-index: 1;
+  transition: transform 0.2s linear; 
+}
+
+
+/* 3. The Login Card */
+.login-card-layout {
+  display: flex;
   width: 100%;
-  max-width: 450px;
-  background: var(--white);
-  padding: 2.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  border-top: 5px solid var(--primary-color);
+  max-width: 900px;
+  padding: 0;
+  overflow: hidden;
+  /* Sits on top of the grid */
+  z-index: 2; 
+  position: relative;
 }
 
-.login-header {
+/* --- (All the styles below are the same as before) --- */
+
+/* 4. The LEFT "Identity" Panel */
+.login-identity-panel {
+  flex-basis: 45%;
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  margin-bottom: 2rem;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
 .committee-login-logo {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  margin: 0 auto 1rem auto;
+  background: var(--white);
+  padding: 1rem;
   object-fit: contain;
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
+  border: 4px solid var(--accent-color);
 }
 
-.login-header h2 {
-  color: var(--primary-color);
+.login-identity-panel h2 {
   font-size: 1.8rem;
-  margin-bottom: 0.25rem;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
-.login-header p {
+.login-identity-panel p {
   font-size: 1rem;
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.5rem;
 }
 
-/* --- Role Selector (Copied from modal) --- */
+/* 5. The RIGHT "Form" Panel */
+.login-form-panel {
+  flex-basis: 55%;
+  padding: 3rem;
+  background: var(--white);
+}
+
+/* Role Selector Style */
 .role-selector {
   display: flex;
   margin-bottom: 1.5rem;
@@ -54,50 +107,34 @@
   overflow: hidden;
 }
 .role-selector label {
-  flex: 1;
-  text-align: center;
-  padding: 0.75rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: var(--text-light);
-  font-weight: 500;
+  flex: 1; text-align: center; padding: 0.75rem;
+  cursor: pointer; transition: all 0.3s ease;
+  color: var(--text-light); font-weight: 500;
 }
-.role-selector input[type="radio"] {
-  display: none;
-}
+.role-selector input[type="radio"] { display: none; }
 .role-selector label.active {
   background-color: var(--primary-color);
   color: var(--white);
 }
 
-/* --- Form Group (Copied from modal) --- */
-.form-group {
-  margin-bottom: 1.25rem;
-}
+/* Standard Form Group */
+.form-group { margin-bottom: 1.25rem; }
 .form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--primary-color);
+  display: block; font-weight: 600;
+  margin-bottom: 0.5rem; color: var(--primary-color);
 }
 .form-group input {
-  width: 100%;
-  padding: 0.8rem 1rem;
+  width: 100%; padding: 0.8rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
+  font-family: 'Poppins', sans-serif; font-size: 1rem;
 }
 .form-group input:focus {
-  outline: none;
-  border-color: var(--accent-color);
+  outline: none; border-color: var(--accent-color);
   box-shadow: 0 0 0 2px rgba(1, 111, 190, 0.2);
 }
 
-/* --- Login Footer --- */
 .login-footer {
-  text-align: center;
-  margin-top: 1.5rem;
-  font-size: 0.8rem;
-  color: #999;
+  text-align: center; margin-top: 1.5rem;
+  font-size: 0.8rem; color: #999;
 }
