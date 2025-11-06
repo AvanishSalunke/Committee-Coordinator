@@ -1,13 +1,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const mongoose = require('mongoose'); // Import Mongoose
+const mongoose = require('mongoose');
 
-// Load environment variables from .env file
 dotenv.config();
 
-// --- Import our new auth routes ---
+// --- Import our routes ---
 const authRoutes = require('./routes/auth');
+const transactionRoutes = require('./routes/transactions'); // <-- This will work now!
 
 const app = express();
 
@@ -18,20 +18,18 @@ const connectDB = async () => {
     console.log('MongoDB Connected...');
   } catch (err) {
     console.error(err.message);
-    process.exit(1); // Exit process with failure
+    process.exit(1);
   }
 };
-connectDB(); // Run the connection function
-// -------------------------
+connectDB();
 
 // --- Middlewares ---
 app.use(cors());
 app.use(express.json());
 
 // --- API Routes ---
-// This tells the server:
-// For any URL starting with "/api/auth", use the 'authRoutes' file.
 app.use('/api/auth', authRoutes);
+app.use('/api/transactions', transactionRoutes); // This will work now!
 
 // --- Test Route ---
 app.get('/', (req, res) => {
