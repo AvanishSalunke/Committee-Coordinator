@@ -12,9 +12,9 @@ export const committees = [
   { id: 'rangawardhan', name: 'Rangawardhan', logo: 'src/assets/logos/ranga_logo.png' },
   { id: 'coc', name: 'COC (Community of Coders)', logo: 'src/assets/logos/coc_logo.png' },
   { id: 'vjti-racing', name: 'VJTI Racing', logo: 'src/assets/logos/vr_logo.png' },
-  { id: 'digital-vjti', name: 'Digital VJTI', logo: 'src/assets/logos/digi_logo.png' },
+  { id: 'digital-vjti', name: 'Digital VJTI', logo: 'src/assets/logos/digital-vjti.jpg' },
   { id: 'vishwa-vjti', name: 'Vishwa VJTI', logo: 'src/assets/logos/vishwa_logo.png' },
-  { id: 'synergists', name: 'Synergists', logo: 'src/assets/logos/syn_logo.png' },
+  { id: 'synergists', name: 'Synergists', logo: 'src/assets/logos/synergist.jpg' },
   { id: 'ecell', name: 'E-Cell', logo: 'src/assets/logos/ecell_logo.png' },
   { id: 'alumni', name: 'Alumni Association', logo: 'src/assets/logos/aa_logo.png' },
 ];

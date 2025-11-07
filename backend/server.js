@@ -7,7 +7,9 @@ dotenv.config();
 
 // --- Import our routes ---
 const authRoutes = require('./routes/auth');
-const transactionRoutes = require('./routes/transactions'); // <-- This will work now!
+const transactionRoutes = require('./routes/transactions');
+const sponsorshipRoutes = require('./routes/sponsorships');
+const fundRoutes = require('./routes/funds'); // <-- This will now work
 
 const app = express();
 
@@ -29,7 +31,9 @@ app.use(express.json());
 
 // --- API Routes ---
 app.use('/api/auth', authRoutes);
-app.use('/api/transactions', transactionRoutes); // This will work now!
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/sponsorships', sponsorshipRoutes);
+app.use('/api/funds', fundRoutes); // <-- This will now work
 
 // --- Test Route ---
 app.get('/', (req, res) => {

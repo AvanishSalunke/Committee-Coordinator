@@ -2,109 +2,116 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './StudentDashboard.css';
 
+// --- Categories (Same) ---
 const categories = [
   'Marketing & Printing', 'Technology & Hardware', 'Food & Refreshments',
   'Logistics & Travel', 'Guest & Speaker Fees', 'Other'
 ];
 
-// --- Icons (Same as before) ---
+// --- Icons (TYPO FIXED) ---
 const FundsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 12a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h21a.75.75 0 0 1 .75.75Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5v15m0 0a.75.75 0 0 1-.75-.75V4.5a.75.75 0 0 1 1.5 0v14.25a.75.75 0 0 1-.75.75Z" clipRule="evenodd" /></svg>;
-const ExpensesIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m0 0a.75.75 0 0 1-.75-.75V4.5a.75.75 0 0 1 1.5 0v14.25a.75.75 0 0 1-.75.75Z" clipRule="evenodd" /><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Z" /></svg>;
+const ExpensesIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m0 0a.75.75 0 0 1-.75-.75V4.5a.75.75 0 0 1 1.5 0v14.25a.75.75 0 0 1-.75.75Z" clipRule="evenodd" /><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Z" /></svg>; // <-- Typo was here (d=)
 
 
 function StudentDashboard() {
   const [activeTab, setActiveTab] = useState('expense');
   
-  // --- This is now REAL data ---
   const [expenses, setExpenses] = useState([]);
+  const [sponsorships, setSponsorships] = useState([]);
   const [funds, setFunds] = useState({ totalFunds: 0, totalExpenses: 0 });
 
-  // --- Form State (Same as before) ---
+  // --- Expense Form State ---
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState(categories[0]);
   const [description, setDescription] = useState('');
   const [receiptLink, setReceiptLink] = useState('');
   
+  // --- Sponsorship Form State ---
+  const [companyName, setCompanyName] = useState('');
+  const [companyOrigin, setCompanyOrigin] = useState('');
+  const [sponsorDesc, setSponsorDesc] = useState('');
+  const [documentLink, setDocumentLink] = useState('');
+  const [amountPledged, setAmountPledged] = useState('');
+  const [contactPerson, setContactPerson] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // --- NEW: Function to get the token ---
-  const getToken = () => {
-    return localStorage.getItem('token');
-  };
+  const getToken = () => localStorage.getItem('token');
+  const authConfig = { headers: { Authorization: `Bearer ${getToken()}` } };
 
-  // --- NEW: Function to fetch expenses from the API ---
-  const fetchExpenses = async () => {
+  // --- API Call: Fetch All Data ---
+  const fetchData = async () => {
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      };
-      const { data } = await axios.get(
-        'http://localhost:5000/api/transactions/my-transactions',
-        config
-      );
-      setExpenses(data);
-    } catch (err) {
-      console.error('Error fetching expenses:', err);
-      setError('Could not fetch expenses.');
-    }
+      const { data: fundData } = await axios.get('http://localhost:5000/api/funds/my-committee', authConfig);
+      setFunds(fundData);
+      
+      const { data: expenseData } = await axios.get('http://localhost:5000/api/transactions/my-transactions', authConfig);
+      setExpenses(expenseData);
+      
+      const { data: sponsorData } = await axios.get('http://localhost:5000/api/sponsorships/my-sponsorships', authConfig);
+      setSponsorships(sponsorData);
+
+    } catch (err) { console.error('Error fetching data:', err); }
   };
 
-  // --- NEW: Run this function when the page loads ---
   useEffect(() => {
-    fetchExpenses();
+    fetchData();
   }, []);
 
-  // --- NEW: This is the REAL submit function ---
+  // --- Form Submit: Expense ---
   const handleSubmitExpense = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess('');
-
+    setLoading(true); setError(''); setSuccess('');
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
-      };
+      const config = { headers: { 'Content-Type': 'application/json', ...authConfig.headers } };
       const expenseData = { title, amount, category, description, receiptLink };
-      await axios.post(
-        'http://localhost:5000/api/transactions',
-        expenseData,
-        config
-      );
-
+      await axios.post('http://localhost:5000/api/transactions', expenseData, config);
       setLoading(false);
       setSuccess('Expense submitted successfully!');
       setTitle(''); setAmount(''); setDescription(''); setReceiptLink('');
-      fetchExpenses(); // Refresh the list!
-
+      fetchData(); // Refresh all data
     } catch (err) {
       setLoading(false);
-      const message = err.response?.data?.message || 'Submission failed.';
-      setError(message);
+      setError(err.response?.data?.message || 'Submission failed.');
+    }
+  };
+  
+  // --- Form Submit: Sponsorship ---
+  const handleSubmitSponsorship = async (e) => {
+    e.preventDefault();
+    setLoading(true); setError(''); setSuccess('');
+    try {
+      const config = { headers: { 'Content-Type': 'application/json', ...authConfig.headers } };
+      const sponsorData = { 
+        companyName, companyOrigin, description: sponsorDesc, documentLink, 
+        amountPledged, contactPerson, contactEmail 
+      };
+      await axios.post('http://localhost:5000/api/sponsorships', sponsorData, config);
+      
+      setLoading(false);
+      setSuccess('Sponsorship logged successfully!');
+      setCompanyName(''); setCompanyOrigin(''); setSponsorDesc(''); setDocumentLink('');
+      setAmountPledged(''); setContactPerson(''); setContactEmail('');
+      fetchData(); // Refresh all data
+    } catch (err) {
+      setLoading(false);
+      setError(err.response?.data?.message || 'Submission failed.');
     }
   };
 
-  // --- This function renders the correct history (updated) ---
+  // --- Renders the correct history based on the active tab ---
   const renderHistory = () => {
     if (activeTab === 'expense') {
       return (
         <div className="card" style={{ marginTop: '2rem' }} data-aos="fade-up" data-aos-delay="300">
-          <div className="card-header">
-            <h2>My Expense History</h2>
-          </div>
+          <div className="card-header"><h2>My Expense History</h2></div>
           <div className="card-body">
             <div className="expense-list">
-              {expenses.length === 0 ? (
-                <p>You have not submitted any expenses yet.</p>
-              ) : (
+              {expenses.length === 0 ? (<p>You have not submitted any expenses yet.</p>) : (
                 expenses.map((expense) => (
                   <div className="expense-item" key={expense._id}>
                     <div className="expense-item-info">
@@ -126,7 +133,23 @@ function StudentDashboard() {
       return (
         <div className="card" style={{ marginTop: '2rem' }} data-aos="fade-up" data-aos-delay="300">
           <div className="card-header"><h2>My Sponsorship History</h2></div>
-          <div className="card-body"><p>This feature is coming soon.</p></div>
+          <div className="card-body">
+            <div className="expense-list">
+              {sponsorships.length === 0 ? (<p>You have not logged any sponsorships yet.</p>) : (
+                sponsorships.map((sponsor) => (
+                  <div className="expense-item" key={sponsor._id}>
+                    <div className="expense-item-info">
+                      <h4>{sponsor.companyName}</h4>
+                      <p>₹{sponsor.amountPledged.toLocaleString('en-IN')}</p>
+                    </div>
+                    <span className={`status-badge ${sponsor.status === 'confirmed' ? 'status-approved' : 'status-pending'}`}>
+                      {sponsor.status}
+                    </span>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         </div>
       );
     }
@@ -140,25 +163,25 @@ function StudentDashboard() {
         <p>Welcome, Student Treasurer!</p>
       </div>
 
-      {/* --- STAT CARDS (Still mock data) --- */}
+      {/* --- 1. "FUND TOTALS" STAT CARDS --- */}
       <div className="stat-card-row" data-aos="fade-up">
         <div className="card stat-card">
           <div className="stat-icon green"><FundsIcon /></div>
           <div className="stat-info">
             <h3>Total Funds</h3>
-            <p>₹50,000</p>
+            <p>₹{funds.totalFunds.toLocaleString('en-IN')}</p>
           </div>
         </div>
         <div className="card stat-card">
           <div className="stat-icon red"><ExpensesIcon /></div>
           <div className="stat-info">
             <h3>Total Expenses</h3>
-            <p>₹22,000</p>
+            <p>₹{funds.totalExpenses.toLocaleString('en-IN')}</p>
           </div>
         </div>
       </div>
 
-      {/* --- TABBED INTERFACE --- */}
+      {/* --- 2. "TABBED" INTERFACE --- */}
       <div className="card" data-aos="fade-up" data-aos-delay="200">
         <div className="dashboard-tabs">
           <button 
@@ -222,11 +245,50 @@ function StudentDashboard() {
             </div>
           )}
 
-          {/* --- Tab 2: Log Sponsorship (Placeholder) --- */}
+          {/* --- Tab 2: Log Sponsorship (NEW FORM) --- */}
           {activeTab === 'sponsorship' && (
             <div className="form-container">
-              <h2>Log Sponsorship</h2>
-              <p>This feature is coming soon.</p>
+              <form onSubmit={handleSubmitSponsorship}>
+                <div className="form-row">
+                  <div className="form-group" style={{ flex: 2 }}>
+                    <label htmlFor="companyName">Company Name</label>
+                    <input type="text" id="companyName" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="e.g., Red Bull" required />
+                  </div>
+                  <div className="form-group" style={{ flex: 1 }}>
+                    <label htmlFor="companyOrigin">Company Website/Origin</label>
+                    <input type="text" id="companyOrigin" value={companyOrigin} onChange={(e) => setCompanyOrigin(e.target.value)} placeholder="e.g., redbull.com" required />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Description</label>
+                  <textarea id="description" value={sponsorDesc} onChange={(e) => setSponsorDesc(e.target.value)} placeholder="e.g., Sponsorship for 3 events, in-kind drinks" required />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="documentLink">Official Docs Link</label>
+                  <input type="text" id="documentLink" value={documentLink} onChange={(e) => setDocumentLink(e.target.value)} placeholder="Paste Google Drive link to proposal/MOU" required />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="amountPledged">Amount Pledged (in ₹)</label>
+                  <input type="number" id="amountPledged" value={amountPledged} onChange={(e) => setAmountPledged(e.target.value)} placeholder="e.g., 50000" required />
+                </div>
+                <hr style={{border: 0, borderTop: '1px solid var(--border-color)', margin: '1.5rem 0'}} />
+                <div className="form-row">
+                  <div className="form-group" style={{ flex: 1 }}>
+                    <label htmlFor="contactPerson">Contact Person (Optional)</label>
+                    <input type="text" id="contactPerson" value={contactPerson} onChange={(e) => setContactPerson(e.target.value)} placeholder="e.g., Mr. Sharma" />
+                  </div>
+                  <div className="form-group" style={{ flex: 1 }}>
+                    <label htmlFor="contactEmail">Contact Email (Optional)</label>
+                    <input type="email" id="contactEmail" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder="e.g., sharma@redbull.com" />
+                  </div>
+                </div>
+                
+                {success && <div className="form-success">{success}</div>}
+                {error && <div className="form-error">{error}</div>}
+                <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
+                  {loading ? 'Submitting...' : 'Log Sponsorship'}
+                </button>
+              </form>
             </div>
           )}
 
@@ -240,7 +302,7 @@ function StudentDashboard() {
         </div>
       </div>
 
-      {/* --- "SUBMISSION HISTORY" (Now dynamic) --- */}
+      {/* --- 3. "SUBMISSION HISTORY" (Dynamic) --- */}
       {renderHistory()}
 
     </div>
