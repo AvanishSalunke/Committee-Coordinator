@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './StudentDashboard.css';
+import ExpenseDetailModal from '../components/ExpenseDetailModal';
 
 // --- Categories (Same) ---
 const categories = [
@@ -10,7 +11,7 @@ const categories = [
 
 // --- Icons (TYPO FIXED) ---
 const FundsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 12a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h21a.75.75 0 0 1 .75.75Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5v15m0 0a.75.75 0 0 1-.75-.75V4.5a.75.75 0 0 1 1.5 0v14.25a.75.75 0 0 1-.75.75Z" clipRule="evenodd" /></svg>;
-const ExpensesIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m0 0a.75.75 0 0 1-.75-.75V4.5a.75.75 0 0 1 1.5 0v14.25a.75.75 0 0 1-.75.75Z" clipRule="evenodd" /><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Z" /></svg>; // <-- Typo was here (d=)
+const ExpensesIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m0 0a.75.75 0 0 1-.75-.75V4.5a.75.75 0 0 1 1.5 0v14.25a.75.75 0 0 1-.75.75Z" clipRule="evenodd" /><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Z" /></svg>;
 
 
 function StudentDashboard() {
@@ -20,14 +21,12 @@ function StudentDashboard() {
   const [sponsorships, setSponsorships] = useState([]);
   const [funds, setFunds] = useState({ totalFunds: 0, totalExpenses: 0 });
 
-  // --- Expense Form State ---
+  // --- Form States ---
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState(categories[0]);
   const [description, setDescription] = useState('');
   const [receiptLink, setReceiptLink] = useState('');
-  
-  // --- Sponsorship Form State ---
   const [companyName, setCompanyName] = useState('');
   const [companyOrigin, setCompanyOrigin] = useState('');
   const [sponsorDesc, setSponsorDesc] = useState('');
@@ -39,6 +38,9 @@ function StudentDashboard() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const [selectedExpense, setSelectedExpense] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null); // <-- CHANGE 1: NEW STATE FOR USER
 
   const getToken = () => localStorage.getItem('token');
   const authConfig = { headers: { Authorization: `Bearer ${getToken()}` } };
@@ -60,6 +62,11 @@ function StudentDashboard() {
 
   useEffect(() => {
     fetchData();
+    // --- CHANGE 2: "PROPERLY" LOAD USER FROM LOCALSTORAGE ---
+    const userFromStorage = JSON.parse(localStorage.getItem('user'));
+    if (userFromStorage) {
+      setCurrentUser(userFromStorage);
+    }
   }, []);
 
   // --- Form Submit: Expense ---
@@ -113,7 +120,11 @@ function StudentDashboard() {
             <div className="expense-list">
               {expenses.length === 0 ? (<p>You have not submitted any expenses yet.</p>) : (
                 expenses.map((expense) => (
-                  <div className="expense-item" key={expense._id}>
+                  <div 
+                    className="expense-item clickable" 
+                    key={expense._id}
+                    onClick={() => setSelectedExpense(expense)} 
+                  >
                     <div className="expense-item-info">
                       <h4>{expense.title}</h4>
                       <p>₹{expense.amount.toLocaleString('en-IN')}</p>
@@ -305,6 +316,14 @@ function StudentDashboard() {
       {/* --- 3. "SUBMISSION HISTORY" (Dynamic) --- */}
       {renderHistory()}
 
+      {/* --- CHANGE 3: "DYNAMICALLY" PASS THE USER PROP --- */}
+      {selectedExpense && (
+        <ExpenseDetailModal
+          transaction={selectedExpense}
+          onClose={() => setSelectedExpense(null)}
+          user={currentUser} 
+        />
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './TeacherDashboard.css';
+import ExpenseDetailModal from '../components/ExpenseDetailModal'; // <-- CHANGE 1: IMPORT
 
 // --- Icons (TYPO FIXED) ---
 const FundsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 12a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h21a.75.75 0 0 1 .75.75Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5v15m0 0a.75.75 0 0 1-.75-.75V4.5a.75.75 0 0 1 1.5 0v14.25a.75.75 0 0 1-.75.75Z" clipRule="evenodd" /></svg>;
@@ -17,6 +18,7 @@ function TeacherDashboard() {
   const [funds, setFunds] = useState({ totalFunds: 0, totalExpenses: 0 });
   
   const [expandedId, setExpandedId] = useState(null);
+  const [selectedTransaction, setSelectedTransaction] = useState(null); // <-- CHANGE 2: NEW STATE
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -218,41 +220,58 @@ function TeacherDashboard() {
             </div>
           )}
 
-          {/* --- Tab 3: Full History --- */}
+          {/* --- Tab 3: Full History (NOW "DYNAMIC"!) --- */}
           {activeTab === 'history' && (
              <div className="transaction-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Student</th>
-                    <th>Title</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {loading && <tr><td colSpan="4">Loading...</td></tr>}
-                  {!loading && allOtherTransactions.length === 0 && (
-                    <tr><td colSpan="4">No approved or rejected expenses.</td></tr>
-                  )}
-                  {!loading && allOtherTransactions.map(t => (
-                    <tr key={t._id}>
-                      <td>{t.user.username}</td>
-                      <td>{t.title}</td>
-                      <td>₹{t.amount.toLocaleString('en-IN')}</td>
-                      <td>
-                        <span className={`status-badge ${t.status === 'approved' ? 'status-approved' : 'status-rejected'}`}>
-                          {t.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+               <table>
+                 <thead>
+                   <tr>
+                     <th>Student</th>
+                     <th>Title</th>
+                     <th>Amount</th>
+                     <th>Status</th>
+                     <th>Details</th> {/* <-- CHANGE 3: NEW COLUMN HEADER --> */}
+                   </tr>
+                 </thead>
+                 <tbody>
+                   {loading && <tr><td colSpan="5">Loading...</td></tr>}
+                   {!loading && allOtherTransactions.length === 0 && (
+                     <tr><td colSpan="5">No approved or rejected expenses.</td></tr>
+                   )}
+                   {!loading && allOtherTransactions.map(t => (
+                     <tr key={t._id}>
+                       <td>{t.user.username}</td>
+                       <td>{t.title}</td>
+                       <td>₹{t.amount.toLocaleString('en-IN')}</td>
+                       <td>
+                         <span className={`status-badge ${t.status === 'approved' ? 'status-approved' : 'status-rejected'}`}>
+                           {t.status}
+                         </span>
+                       </td>
+                       <td className="actions-cell"> {/* <-- CHANGE 3: NEW COLUMN DATA --> */}
+                         <button 
+                           className="btn-action btn-view" 
+                           onClick={() => setSelectedTransaction(t)}
+                         >
+                           View
+                         </button>
+                       </td>
+                     </tr>
+                   ))}
+                 </tbody>
+               </table>
+             </div>
           )}
         </div>
       </div>
+
+      {/* --- CHANGE 4: RENDER THE MODAL "DYNAMICALLY" --- */}
+      {selectedTransaction && (
+        <ExpenseDetailModal 
+          transaction={selectedTransaction} 
+          onClose={() => setSelectedTransaction(null)} 
+        />
+      )}
     </div>
   );
 }
