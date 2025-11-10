@@ -6,7 +6,7 @@ export const headOfStudentActivities = {
   name: 'Dr. Suranjana Gangopadhyay',
   department: 'Head of Student Activities (HSA)',
   committees: ['Oversees all student committees'], // This "committee" is a role
-  photo: 'https://placehold.co/200x200/c70039/white?text=HSA'
+  photo: 'src/assets/faculty_pics/gango_mam.png'
 };
 
 // 2. Mock data for the "Live Announcements" (Unchanged)
@@ -24,52 +24,52 @@ export const mockAnnouncements = [
 export const mockFaculty = [
   {
     id: 1,
-    name: 'Prof. S.S Rechavula',
+    name: 'Prof. S.S Lachure',
     department: 'Computer Engineering',
     committees: ['Digital VJTI'], // One committee
-    photo: 'https://placehold.co/200x200/0a1f49/white?text=SSR'
+    photo: 'src/assets/faculty_pics/lachure_sir.png'
   },
   {
     id: 1.5, // Added new ID
-    name: 'Prof. A. C. Mehta', // New prof
+    name: 'Prof Varsha', // New prof
     department: 'Computer Engineering',
-    committees: ['COC (Community of Coders)'], // One committee
-    photo: 'https://placehold.co/200x200/0a1f49/white?text=ACM'
+    committees: ['DLA'], 
+    photo: 'src/assets/faculty_pics/varsha_mam.png'
   },
   {
     id: 2,
-    name: 'Prof. A. M. Kulkarni',
+    name: 'V.B Suryavanshi',
     department: 'Mechanical Engineering',
-    committees: ['VJTI Racing'], // One committee
-    photo: 'https://placehold.co/200x200/016fbe/white?text=AMK'
+    committees: ['SRA'],
+    photo: 'src/assets/faculty_pics/surya_sir.png'
   },
   {
-    id: 2.5, // Added new ID
-    name: 'Prof. S. R. Patil', // New prof
+    id: 2.5,
+    name: 'Prof. Datta Shinde', 
     department: 'Mechanical Engineering',
-    committees: ['SRA (Society of Robotics)'], // One committee
-    photo: 'https://placehold.co/200x200/016fbe/white?text=SRP'
+    committees: ['Pratibimb'], 
+    photo: 'src/assets/faculty_pics/datta_shinde.png'
   },
   {
     id: 3,
-    name: 'Prof. R. P. Singh',
+    name: 'Prof. Mandar Tendolkar',
     department: 'Civil Engineering',
-    committees: ['Pratibimb'], // One committee
-    photo: 'https://placehold.co/200x200/0a1f49/white?text=RPS'
+    committees: ['VJTI Racing'], 
+    photo: 'src/assets/faculty_pics/mandar_sir.png'
   },
   {
-    id: 3.5, // Added new ID
-    name: 'Prof. V. A. Dixit', // New prof
-    department: 'Civil Engineering',
-    committees: ['Enthusia'], // One committee
-    photo: 'https://placehold.co/200x200/0a1f49/white?text=VAD'
+    id: 3.5,
+    name: 'Prof. Vikas Vadekar', 
+    department: 'Mechanical ENgineering',
+    committees: ['Pratibimb'], 
+    photo: 'src/assets/faculty_pics/vikas_vadekar.png'
   },
   {
     id: 4,
-    name: 'Prof. P. V. Shah',
+    name: 'Prof. Sachin Naik',
     department: 'Electronics Engineering',
-    committees: ['E-Cell'], // One committee
-    photo: 'https://placehold.co/200x200/016fbe/white?text=PVS'
+    committees: ['Aero'],
+    photo: 'src/assets/faculty_pics/sachin_naik.png'
   },
   {
     id: 4.5, // Added new ID
