@@ -1,7 +1,5 @@
 # Committee Coordinator - VJTI
 
-> **Status:** This project is currently in active development.
-
 ## 1. About The Project
 
 **Committee Coordinator** is a web-based portal being built to manage and track the finances for all student-run committees at VJTI.
